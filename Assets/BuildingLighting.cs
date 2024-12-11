@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
 
@@ -7,6 +5,11 @@ public class BuildingLighting : MonoBehaviour
 {
     public Volume[] interiorVolumes; // Assign the Volumes here in the Inspector
     public GameObject roof; // Assign the roof here in the Inspector
+    public Light sunLight;
+
+    private void Start()
+    {
+    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -18,6 +21,12 @@ public class BuildingLighting : MonoBehaviour
             }
             Debug.Log("Player entered the building.");
             roof.SetActive(false); // Hide the roof
+        }
+
+        if (sunLight != null)
+        {
+            sunLight.shadows = LightShadows.None;
+            Debug.Log("Sun shadows disabled.");
         }
     }
 
@@ -32,6 +41,11 @@ public class BuildingLighting : MonoBehaviour
             Debug.Log("Player exited the building.");
             roof.SetActive(true); // Show the roof
         }
+
+        if (sunLight != null)
+        {
+            sunLight.shadows = LightShadows.Hard;
+            Debug.Log("Sun shadows enabled.");
+        }
     }
 }
-
